@@ -114,40 +114,4 @@ Calibration slope < 1 (both internal & external) → slight over-prediction at y
 
 Subgroup MAE (e.g., by sex) shows small gaps in this run; continue to monitor if deployment skews.
 
-Add your own data
 
-Prepare:
-
-train_dnam (β matrix), train_meta (must include age)
-
-eval_dnam, eval_meta (for external cohort)
-
-Update file paths in Cells 1 & 4.
-
-Ensure age units are years.
-
-Run the notebook; ColumnAligner will handle feature order for the external set.
-
-Troubleshooting
-
-KeyError when subsetting DNAm: orientation mismatch (samples vs CpGs).
-
-Use the orientation-robust EDA snippets (already included) and rely on ColumnAligner before evaluation.
-
-Worse-than-expected external metrics: verify that alignment ran, and check the age range mismatch; expect larger tail errors if your external set has more extremes.
-
-Memory issues: reduce CpG subset sizes for EDA plots (e.g., 20k probes), and prefer float32 where safe.
-
-Reproducibility
-
-Global SEED = 42 (NumPy + random) is set in Cell 0.
-
-KFold/shuffles in scikit-learn use the same seed.
-
-License & attribution
-
-Replace this with your chosen license.
-
-External cohort evaluated here: GSE157131 (public DNAm dataset).
-
-Built with NumPy, pandas, matplotlib, SciPy, and scikit-learn.
