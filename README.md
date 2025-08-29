@@ -1,4 +1,29 @@
-Data expectations
+# Biological Age Prediction from DNA Methylation (Whole Blood)
+
+## Purpose & Context
+
+This notebook demonstrates a **transparent, reproducible pipeline** for estimating chronological age from whole-blood DNA methylation (DNAm) arrays—often used as a proxy for “biological age.” The goal is not to chase the lowest possible error with heavy feature engineering, but to provide a **clear, defensible baseline** that: (1) validates data quality, (2) quantifies the age signal present in DNAm, (3) compares **simple, interpretable models** (Ridge, PCR, PLS, RF), (4) shows how a **light stacked ensemble** can yield a modest lift, and (5) proves **cross-study generalization** on an external cohort (**GSE157131**) using principled **feature alignment** (no retraining on the external data).
+
+**Why this matters.** DNAm age models are sensitive to cohort composition, preprocessing, and feature order. Many projects fail not because the model is “bad,” but because inputs are misaligned or calibration is misunderstood. This notebook foregrounds **EDA, calibration, and alignment** so results are reproducible and interpretable, not accidental.
+
+**What you’ll get.**
+- A clean end-to-end workflow: **Load → EDA → Train/Test → Stack → External validation**.  
+- **Ridge** as the main baseline (stable under high collinearity, p≫n), with PCR/PLS/RF for contrast, and a **stacked (Ridge+PLS)** ensemble for a small but real improvement.  
+- **Calibration-aware** reporting (residuals vs age, Bland–Altman, bin-wise MAE) and a lightweight **fairness check** (subgroup MAE).  
+- A robust **ColumnAligner** to prevent silent feature misalignment across studies.
+
+**Who it’s for.** Researchers, data scientists, and students who need a **reference implementation** that travels well across cohorts and that explains *why* the numbers look the way they do (e.g., mild regression-to-the-mean from age distributions).
+
+**Assumptions & scope.**
+- Inputs are **β values in [0,1]**; metadata includes **`age` in years**.  
+- Matrix orientation (CpGs×Samples vs Samples×CpGs) may vary; the notebook handles this and enforces **train-schema alignment** for evaluation.  
+- External evaluation is **strictly held out**—no retraining or leakage.  
+- This is **not** a clinical tool; it’s a research/teaching baseline focused on clarity and reproducibility.
+
+> **TL;DR:** A clear baseline DNAm-age pipeline with strong EDA, simple models, light stacking, and careful cross-study evaluation—built to **explain and generalize**, not overfit.
+
+---
+
 
 DNAm matrix (training & evaluation):
 
